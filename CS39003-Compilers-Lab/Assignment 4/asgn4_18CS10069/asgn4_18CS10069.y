@@ -362,9 +362,9 @@ specifier_qualifier_list_opt:
                                 
 #behenchod                             
                                 
-enum_specifier: ENUM identifier_opt CUROPEN enum_list CURCLOSE
+enum_specifier: ENUM identifier_opt '{' enum_list '}'
     { printf("enum_specifier -> enum identifier_opt { enumerator-list }\n"); }
-    | ENUM identifier_opt CUROPEN enum_list COMMA CURCLOSE
+    | ENUM identifier_opt '{' enum_list ',' '}'
     { printf("enum_specifier -> enum identifier_opt { enumerator-list , }\n"); }
     | ENUM IDENTIFIER
     { printf("enum_specifier -> enum identifier\n"); }
@@ -378,17 +378,15 @@ identifier_opt: IDENTIFIER
 
 enum_list: enumerator
     { printf("enumerator-list -> enumerator\n"); }
-    | enum_list COMMA enumerator
+    | enum_list ',' enumerator
     { printf("enumerator-list -> enumerator_list , enumerator\n"); }
     ;
 
 enumerator: IDENTIFIER
     { printf("enumerator -> enumeration_constant\n"); }
-    | IDENTIFIER EQUAL constant
+    | IDENTIFIER '=' constant
     { printf("enumerator -> enumeration_constant = constant-expression\n"); }
     ;
-
-
 
 
 
