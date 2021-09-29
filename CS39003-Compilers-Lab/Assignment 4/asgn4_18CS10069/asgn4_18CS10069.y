@@ -12,7 +12,7 @@
     char* stringValue;
 }
 
-%token AUTO REGISTER SIGNED UNSIGNED BOOL COMPLEX IMAGINARY
+%token AUTO REGISTER SIGNED UNSIGNED BOOL COMPLEX IMAGINARY ENUM
 
 %token CASE DEFAULT IF ELSE SWITCH WHILE DO FOR GOTO CONTINUE BREAK RETURN 
 %token TYPEDEF EXTERN STATIC INLINE 
@@ -319,23 +319,6 @@ storage_class_specifier: EXTERN
     | REGISTER
     { printf("storage_class_specifier -> register\n"); }
     ;
-
-type_specifier:
-                VOID
-                { printf("type_specifier -> void\n"); }
-                | CHAR
-                { printf("type_specifier -> char\n"); }
-                | SHORT
-                { printf("type_specifier -> short\n"); }
-                | INT
-                { printf("type_specifier -> int\n"); }
-                | LONG
-                { printf("type_specifier -> long\n"); }
-                | FLOAT
-                { printf("type_specifier -> float\n"); }
-                | DOUBLE
-                { printf("type_specifier -> double\n"); }
-                ;
                 
 type_specifier: VOID
     { printf("type_specifier -> VOID\n"); }
@@ -380,29 +363,29 @@ specifier_qualifier_list_opt:
 #behenchod                             
                                 
 enum_specifier: ENUM identifier_opt CUROPEN enum_list CURCLOSE
-    { printf("enum_specifier <- enum identifier_opt { enumerator-list }\n"); }
+    { printf("enum_specifier -> enum identifier_opt { enumerator-list }\n"); }
     | ENUM identifier_opt CUROPEN enum_list COMMA CURCLOSE
-    { printf("enum_specifier <- enum identifier_opt { enumerator-list , }\n"); }
+    { printf("enum_specifier -> enum identifier_opt { enumerator-list , }\n"); }
     | ENUM IDENTIFIER
-    { printf("enum_specifier <- enum identifier\n"); }
+    { printf("enum_specifier -> enum identifier\n"); }
     ;
 
 identifier_opt: IDENTIFIER
-    { printf("identifier_opt <- identifier\n"); }
+    { printf("identifier_opt -> identifier\n"); }
     | %empty
-    { printf("identifier_opt <- epsilon\n"); }
+    { printf("identifier_opt -> epsilon\n"); }
     ;
 
 enum_list: enumerator
-    { printf("enumerator-list <- enumerator\n"); }
+    { printf("enumerator-list -> enumerator\n"); }
     | enum_list COMMA enumerator
-    { printf("enumerator-list <- enumerator_list , enumerator\n"); }
+    { printf("enumerator-list -> enumerator_list , enumerator\n"); }
     ;
 
 enumerator: IDENTIFIER
-    { printf("enumerator <- enumeration_constant\n"); }
+    { printf("enumerator -> enumeration_constant\n"); }
     | IDENTIFIER EQUAL constant
-    { printf("enumerator <- enumeration_constant = constant-expression\n"); }
+    { printf("enumerator -> enumeration_constant = constant-expression\n"); }
     ;
 
 
