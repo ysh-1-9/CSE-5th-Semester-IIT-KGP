@@ -25,11 +25,19 @@ FLOAT_CONST                 ({DIGIT_SEQUENCE}{EXPONENT_PART})|({FRAC_CONSTANT}{E
 CONST                       {INTEGER_CONSTANT}|{CHAR_CONSTANT}|{FLOAT_CONST}
 
 %%
+"auto"					{return(AUTO);							}
+"signed"				{return(SIGNED);}
+"unsigned"				{return(UNSIGNED);}
+"_Bool"					{return(BOOL);}
+"_Complex"				{return(COMPLEX);}
+"_Imaginary"				{return(IMAGINARY);}
+"enum"					{return(ENUM);}
+"register"				{return(REGISTER);}
 
 "break"			            { return(BREAK);                                                    }
 "case"			            { return(CASE);                                                     }
 "char"			            { return(CHAR);                                                     }
-"const"                     { return(CONST);                                                    }
+"const"                     	{ return(CONST);                                                    }
 "continue"		            { return(CONTINUE);                                                 }
 "default"		            { return(DEFAULT);                                                  }
 "do"			            { return(DO);                                                       }
