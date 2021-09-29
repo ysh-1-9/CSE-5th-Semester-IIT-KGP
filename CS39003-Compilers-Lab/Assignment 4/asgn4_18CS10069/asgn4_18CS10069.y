@@ -12,6 +12,8 @@
     char* stringValue;
 }
 
+%token AUTO REGISTER SIGNED UNSIGNED BOOL COMPLEX IMAGINARY
+
 %token CASE DEFAULT IF ELSE SWITCH WHILE DO FOR GOTO CONTINUE BREAK RETURN 
 %token TYPEDEF EXTERN STATIC INLINE 
 %token CHAR SHORT INT LONG DOUBLE CONST VOLATILE VOID FLOAT 
@@ -306,6 +308,17 @@ storage_class_specifier:
                             | STATIC
                             { printf("storage_class_specifier -> static\n"); }
                             ;
+                            
+                           
+storage_class_specifier: EXTERN
+    { printf("storage_class_specifier -> extern\n"); }
+    | STATIC
+    { printf("storage_class_specifier -> static\n"); }
+    | AUTO
+    { printf("storage_class_specifier -> auto\n"); }
+    | REGISTER
+    { printf("storage_class_specifier -> register\n"); }
+    ;
 
 type_specifier:
                 VOID
@@ -323,6 +336,34 @@ type_specifier:
                 | DOUBLE
                 { printf("type_specifier -> double\n"); }
                 ;
+                
+type_specifier: VOID
+    { printf("type_specifier -> VOID\n"); }
+    | CHAR
+    { printf("type_specifier -> CHAR\n"); }
+    | SHORT
+    { printf("type_specifier -> SHORT\n"); }
+    | INT
+    { printf("type_specifier -> INT\n"); }
+    | LONG
+    { printf("type_specifier -> LONG\n"); }
+    | FLOAT
+    { printf("type_specifier -> FLOAT\n"); }
+    | DOUBLE
+    { printf("type_specifier -> DOUBLE\n"); }
+    | SIGNED
+    { printf("type_specifier -> SIGNED\n"); }
+    | UNSIGNED
+    { printf("type_specifier -> UNSIGNED\n"); }
+    | BOOL
+    { printf("type_specifier -> BOOL\n"); }
+    | COMPLEX
+    { printf("type_specifier -> COMPLEX\n"); }
+    | IMAGINARY
+    { printf("type_specifier -> IMAGINARY\n"); }
+    | enum_specifier
+    { printf("type_specifier -> ENUM_SPECIFIER\n"); }
+    ;
 
 specifier_qualifier_list:
                             type_specifier specifier_qualifier_list_opt
@@ -335,6 +376,38 @@ specifier_qualifier_list_opt:
                                 specifier_qualifier_list
                                 | /* epsilon */
                                 ;
+                                
+#behenchod                             
+                                
+enum_specifier: ENUM identifier_opt CUROPEN enum_list CURCLOSE
+    { printf("enum_specifier <- enum identifier_opt { enumerator-list }\n"); }
+    | ENUM identifier_opt CUROPEN enum_list COMMA CURCLOSE
+    { printf("enum_specifier <- enum identifier_opt { enumerator-list , }\n"); }
+    | ENUM IDENTIFIER
+    { printf("enum_specifier <- enum identifier\n"); }
+    ;
+
+identifier_opt: IDENTIFIER
+    { printf("identifier_opt <- identifier\n"); }
+    | %empty
+    { printf("identifier_opt <- epsilon\n"); }
+    ;
+
+enum_list: enumerator
+    { printf("enumerator-list <- enumerator\n"); }
+    | enum_list COMMA enumerator
+    { printf("enumerator-list <- enumerator_list , enumerator\n"); }
+    ;
+
+enumerator: IDENTIFIER
+    { printf("enumerator <- enumeration_constant\n"); }
+    | IDENTIFIER EQUAL constant
+    { printf("enumerator <- enumeration_constant = constant-expression\n"); }
+    ;
+
+
+
+
 
 type_qualifier:
                 CONST
